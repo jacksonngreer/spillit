@@ -1,0 +1,130 @@
+/* ===== Global Layout ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #0b0b0c;
+  color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ff5e5e;
+  margin-bottom: 2rem;
+}
+
+/* ===== Buttons ===== */
+.primary-button,
+.secondary-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  margin: 0.5rem;
+}
+
+.primary-button {
+  background-color: #ff5e5e;
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: #ff7676;
+}
+
+.secondary-button {
+  background-color: transparent;
+  color: #ff5e5e;
+  border: 2px solid #ff5e5e;
+}
+
+.secondary-button:hover {
+  background-color: #ff5e5e;
+  color: white;
+}
+
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 280px;
+  margin: 0 auto 2rem;
+}
+
+.join-form input {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 2px solid #ff5e5e;
+  background-color: #1c1c1e;
+  color: #f5f5f5;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.join-form input:focus {
+  outline: none;
+  border-color: #ff7676;
+  background-color: #2a2a2d;
+}
+
+.join-form button {
+  width: 100%;
+}
+
+.card {
+  background-color: #1c1c1e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 94, 94, 0.2);
+  display: inline-block;
+  min-width: 300px;
+}
+
+.room-code {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.room-code span {
+  font-weight: bold;
+  color: #ff5e5e;
+  font-size: 1.3rem;
+}
+
+.player-list {
+  background-color: #1c1c1e;
+  border: 1px solid #ff5e5e;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.player-name {
+  font-size: 1.1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-name:last-child {
+  border-bottom: none;
+}
+
+.waiting-text {
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: #ccc;
+}
+
