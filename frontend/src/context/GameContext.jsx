@@ -24,7 +24,7 @@ export const GameProvider = ({ children }) => {
     if (!roomCode || !playerName) return;
     const handleUnload = () => {
       navigator.sendBeacon(
-        "http://127.0.0.1:8000/leave-room",
+        `${process.env.REACT_APP_API_URL}/leave-room`,
         new Blob([JSON.stringify({ code: roomCode, name: playerName })], { type: "application/json" })
       );
     };
