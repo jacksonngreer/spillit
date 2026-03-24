@@ -11,13 +11,26 @@ export const GameProvider = ({ children }) => {
   );
   const [socket, setSocket] = useState(null);
 
-  // 💾 Save to localStorage whenever values change
+  // Save to localStorage whenever values change
   useEffect(() => {
     localStorage.setItem("playerName", playerName);
     localStorage.setItem("roomCode", roomCode);
     localStorage.setItem("isHost", isHost);
     localStorage.setItem("players", JSON.stringify(players));
   }, [playerName, roomCode, isHost, players]);
+
+  // Notify server when the tab is closed/refreshed
+  useEffect(() => {
+    if (!roomCode || !playerName) return;
+    const handleUnload = () => {
+      navigator.sendBeacon(
+        "http://127.0.0.1:8000/leave-room",
+        new Blob([JSON.stringify({ code: roomCode, name: playerName })], { type: "application/json" })
+      );
+    };
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, [roomCode, playerName]);
 
   const addPlayer = (name) => setPlayers((prev) => [...prev, name]);
 

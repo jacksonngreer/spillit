@@ -45,14 +45,6 @@ function JoinPage() {
         }
       };
 
-              // 🧩 Send a synchronous "leave" signal when tab closes
-        window.addEventListener("beforeunload", () => {
-          const payload = JSON.stringify({ code: data.room_code, name });
-          navigator.sendBeacon("http://127.0.0.1:8000/leave-room", payload);
-        });
-
-
-
       navigate("/lobby");
     } catch (err) {
       console.error("Error joining room:", err);
