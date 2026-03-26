@@ -19,7 +19,7 @@ import "../styles/main.css";
  */
 function GamePage() {
   const navigate = useNavigate();
-  const { playerName, players, socket, isHost, setPlayers, clearGame } =
+  const { playerName, roomCode, players, socket, isHost, setPlayers, clearGame } =
     useContext(GameContext);
 
   // ── Local game state ───────────────────────────────────────────────────────
@@ -164,6 +164,14 @@ function GamePage() {
     // explicitly instead of relying on that broadcast for the first question.
     if (socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({ type: "request_state" }));
+    } else {
+      // Socket still connecting (mid-game join) – chain onto onopen so join
+      // fires first, then request_state, guaranteeing player_name is set server-side.
+      const prevOnOpen = socket.onopen;
+      socket.onopen = (e) => {
+        if (prevOnOpen) prevOnOpen(e);
+        socket.send(JSON.stringify({ type: "request_state" }));
+      };
     }
   }, [socket, setPlayers]);
 
@@ -237,7 +245,7 @@ function GamePage() {
         <div className="card game-card">
           {/* Question header */}
           <p className="question-number">
-            Question {question.index + 1} of {question.total}
+            Question {question.index + 1}
           </p>
           <h2 className="question-text">{question.text}</h2>
 
@@ -339,6 +347,7 @@ function GamePage() {
             <p className="waiting-text">Waiting for host to continue…</p>
           )}
 
+          <p className="room-code">Room: <span>{roomCode}</span></p>
           <button className="secondary-button leave-btn" onClick={handleLeave}>
             Leave
           </button>
