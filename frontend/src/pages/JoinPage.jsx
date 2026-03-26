@@ -45,7 +45,12 @@ function JoinPage() {
         }
       };
 
-      navigate("/lobby");
+      // Send directly to the game if it's already running
+      if (data.game_phase === "voting" || data.game_phase === "results") {
+        navigate("/game");
+      } else {
+        navigate("/lobby");
+      }
     } catch (err) {
       console.error("Error joining room:", err);
       alert("Server error. Make sure the backend is running.");

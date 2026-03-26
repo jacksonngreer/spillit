@@ -73,6 +73,12 @@ function GamePage() {
           if (msg.players) setPlayers(msg.players);
           if (msg.host)    setHostName(msg.host);
 
+          // Mid-game joiner waiting for the next round to start
+          if (msg.phase === "waiting_for_round") {
+            setPhase("waiting_mid_game");
+            break;
+          }
+
           if (msg.phase === "voting" && msg.question) {
             setQuestion(msg.question);
             setPhase("voting");
@@ -101,6 +107,8 @@ function GamePage() {
 
         // ── question: next round starting (broadcast to all GamePages) ────────
         case "question":
+          // players list may have grown (pending players promoted at next_question)
+          if (msg.players) setPlayers(msg.players);
           setQuestion({ index: msg.index, text: msg.text, total: msg.total });
           setPhase("voting");
           setMyVote(null);
@@ -173,6 +181,11 @@ function GamePage() {
     if (socket) socket.send(JSON.stringify({ type: "next_question" }));
   };
 
+  /** Host skips straight to results before all votes are in. */
+  const handleSkipToResults = () => {
+    if (socket) socket.send(JSON.stringify({ type: "skip_to_results" }));
+  };
+
   /** Leave the game – clears all session state and returns to the landing page. */
   const handleLeave = () => {
     clearGame();
@@ -189,6 +202,18 @@ function GamePage() {
     Object.entries(scoreObj)
       .sort(([, a], [, b]) => b - a)
       .map(([name, count]) => ({ name, count }));
+
+  // ── Phase: waiting (mid-game join) ────────────────────────────────────────
+  if (phase === "waiting_mid_game") {
+    return (
+      <div className="container">
+        <div className="card">
+          <h2 className="title">spillit</h2>
+          <p className="waiting-text">Waiting for next round…</p>
+        </div>
+      </div>
+    );
+  }
 
   // ── Phase: waiting ─────────────────────────────────────────────────────────
   if (phase === "waiting") {
@@ -249,6 +274,12 @@ function GamePage() {
               You voted for <strong className="highlight">{myVote}</strong>.
               Waiting for others…
             </p>
+          )}
+
+          {amHost && (
+            <button className="secondary-button" onClick={handleSkipToResults}>
+              Skip to Results
+            </button>
           )}
 
           <button className="secondary-button leave-btn" onClick={handleLeave}>
