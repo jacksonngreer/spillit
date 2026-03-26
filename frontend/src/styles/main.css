@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+
 /* ===== Global Layout ===== */
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #0b0b0c;
+  font-family: 'Inter', sans-serif;
+  background-color: #0b0b0f;
   color: #f5f5f5;
   display: flex;
   justify-content: center;
@@ -15,10 +17,12 @@ body {
 }
 
 .title {
+  font-family: 'Bebas Neue', sans-serif;
   font-size: 3rem;
-  font-weight: 700;
-  color: #ff5e5e;
+  font-weight: 400;
+  color: #8b2fff;
   margin-bottom: 2rem;
+  letter-spacing: 0.05em;
 }
 
 /* ===== Buttons ===== */
@@ -29,27 +33,28 @@ body {
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
   transition: all 0.2s ease;
   margin: 0.5rem;
 }
 
 .primary-button {
-  background-color: #ff5e5e;
+  background-color: #8b2fff;
   color: white;
 }
 
 .primary-button:hover {
-  background-color: #ff7676;
+  background-color: #a050ff;
 }
 
 .secondary-button {
   background-color: transparent;
-  color: #ff5e5e;
-  border: 2px solid #ff5e5e;
+  color: #8b2fff;
+  border: 2px solid #8b2fff;
 }
 
 .secondary-button:hover {
-  background-color: #ff5e5e;
+  background-color: #8b2fff;
   color: white;
 }
 
@@ -65,18 +70,19 @@ body {
 .join-form input {
   padding: 0.75rem 1rem;
   border-radius: 10px;
-  border: 2px solid #ff5e5e;
-  background-color: #1c1c1e;
+  border: 2px solid #8b2fff;
+  background-color: #1c1c22;
   color: #f5f5f5;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
   text-align: center;
   transition: all 0.25s ease;
 }
 
 .join-form input:focus {
   outline: none;
-  border-color: #ff7676;
-  background-color: #2a2a2d;
+  border-color: #00e5ff;
+  background-color: #24242c;
 }
 
 .join-form button {
@@ -84,10 +90,10 @@ body {
 }
 
 .card {
-  background-color: #1c1c1e;
+  background-color: #1c1c22;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(255, 94, 94, 0.2);
+  box-shadow: 0 0 15px rgba(139, 47, 255, 0.2);
   display: inline-block;
   min-width: 300px;
 }
@@ -98,14 +104,14 @@ body {
 }
 
 .room-code span {
-  font-weight: bold;
-  color: #ff5e5e;
+  font-weight: 600;
+  color: #00e5ff;
   font-size: 1.3rem;
 }
 
 .player-list {
-  background-color: #1c1c1e;
-  border: 1px solid #ff5e5e;
+  background-color: #1c1c22;
+  border: 1px solid #8b2fff;
   border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1.5rem;
@@ -143,7 +149,7 @@ body {
 
 .question-number {
   font-size: 0.85rem;
-  color: #ff5e5e;
+  color: #8b2fff;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0 0 0.5rem;
@@ -167,7 +173,7 @@ body {
 /* ===== Vote progress ===== */
 
 .vote-progress-bar {
-  background-color: #2a2a2d;
+  background-color: #24242c;
   border-radius: 99px;
   height: 6px;
   margin-bottom: 0.4rem;
@@ -176,7 +182,7 @@ body {
 
 .vote-progress-fill {
   height: 100%;
-  background-color: #ff5e5e;
+  background-color: #8b2fff;
   border-radius: 99px;
   transition: width 0.3s ease;
 }
@@ -199,23 +205,24 @@ body {
 .vote-button {
   padding: 0.65rem 0.5rem;
   border-radius: 10px;
-  border: 2px solid #ff5e5e;
+  border: 2px solid #8b2fff;
   background-color: transparent;
   color: #f5f5f5;
   font-size: 1rem;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
   transition: all 0.18s ease;
   text-align: center;
 }
 
 .vote-button:hover {
-  background-color: #ff5e5e;
+  background-color: #8b2fff;
   color: white;
 }
 
 /* Accent colour for the voted-for name in the confirmation text */
 .highlight {
-  color: #ff5e5e;
+  color: #00e5ff;
 }
 
 /* ===== Results & Scores ===== */
@@ -242,7 +249,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2a2a2d;
+  background-color: #24242c;
   border-radius: 8px;
   padding: 0.55rem 0.85rem;
   font-size: 1rem;
@@ -250,18 +257,18 @@ body {
 
 /* Highlight the current leader in the running scores */
 .score-row.leading {
-  border: 1px solid #ff5e5e;
+  border: 1px solid #8b2fff;
 }
 
 /* Highlight the overall winner in the final leaderboard */
 .score-row.winner {
-  background-color: rgba(255, 94, 94, 0.15);
-  border: 1px solid #ff5e5e;
+  background-color: rgba(139, 47, 255, 0.15);
+  border: 1px solid #8b2fff;
 }
 
 .result-votes,
 .score-count {
-  color: #ff5e5e;
+  color: #00e5ff;
   font-weight: 600;
 }
 
@@ -278,7 +285,7 @@ body {
 .winner-label {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #ff5e5e;
+  color: #00e5ff;
   margin-bottom: 0.5rem;
 }
 
@@ -291,4 +298,3 @@ body {
 .leave-btn {
   margin-top: 0.75rem;
 }
-
