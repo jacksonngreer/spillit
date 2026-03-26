@@ -10,7 +10,7 @@ function LobbyPage() {
   // Reconnect if socket was lost (e.g. page refresh)
   useEffect(() => {
     if (!socket && roomCode) {
-      const newSocket = new WebSocket(`ws://127.0.0.1:8000/ws/${roomCode}`);
+      const newSocket = new WebSocket(`${process.env.REACT_APP_WS_URL}/ws/${roomCode}`);
       setSocket(newSocket);
       newSocket.onopen = () => {
         newSocket.send(JSON.stringify({ type: "join", name: playerName }));

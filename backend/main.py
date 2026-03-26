@@ -1,4 +1,5 @@
 import json
+import os
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 import random, string
@@ -7,7 +8,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://spillit.live",
+        "https://www.spillit.live",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

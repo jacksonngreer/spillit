@@ -12,7 +12,7 @@ function JoinPage() {
   const handleJoin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://127.0.0.1:8000/join-room/${code}/${name}`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/join-room/${code}/${name}`);
       const data = await res.json();
 
       if (data.error) {
@@ -26,7 +26,7 @@ function JoinPage() {
       setIsHost(false);
 
       // ✅ Connect to WebSocket
-      const newSocket = new WebSocket(`ws://127.0.0.1:8000/ws/${data.room_code}`);
+      const newSocket = new WebSocket(`${process.env.REACT_APP_WS_URL}/ws/${data.room_code}`);
       setSocket(newSocket);
 
       newSocket.onopen = () => {

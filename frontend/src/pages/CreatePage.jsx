@@ -11,7 +11,7 @@ function CreatePage() {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://127.0.0.1:8000/create-room/${name}`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/create-room/${name}`);
       const data = await res.json();
 
       if (data.room_code) {
@@ -21,7 +21,7 @@ function CreatePage() {
         setIsHost(true);
 
         // ✅ Create WebSocket connection
-        const newSocket = new WebSocket(`ws://127.0.0.1:8000/ws/${data.room_code}`);
+        const newSocket = new WebSocket(`${process.env.REACT_APP_WS_URL}/ws/${data.room_code}`);
         setSocket(newSocket);
 
         newSocket.onopen = () => {
