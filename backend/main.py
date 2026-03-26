@@ -51,6 +51,7 @@ def make_game_state():
     return {
         "phase": "lobby",
         "question_index": 0,
+        "question_order": [],
         "votes": {},
         "scores": {},
     }
@@ -217,7 +218,10 @@ async def websocket_endpoint(websocket: WebSocket, code: str):
                         rooms[code]["players"].append(player_name)
                         await broadcast(code, {"type": "join", "name": player_name})
                 else:
-                    # Reconnecting active player – send current state to catch up
+                    # Reconnecting (or first-WS after HTTP join) active player
+                    if game["phase"] == "lobby":
+                        # Notify all lobby clients so their player list stays current
+                        await broadcast(code, {"type": "join", "name": player_name})
                     sync_payload = {
                         "type": "sync",
                         "players": rooms[code]["players"],
@@ -228,7 +232,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str):
                         idx = game["question_index"]
                         sync_payload["question"] = {
                             "index": idx,
-                            "text": QUESTIONS[idx],
+                            "text": QUESTIONS[game["question_order"][idx]],
                             "total": len(QUESTIONS),
                         }
                     if game["phase"] == "results":
@@ -246,6 +250,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str):
                 game["question_index"] = 0
                 game["votes"] = {}
                 game["scores"] = {p: 0 for p in rooms[code]["players"]}
+                game["question_order"] = random.sample(range(len(QUESTIONS)), len(QUESTIONS))
                 await broadcast(code, {"type": "start_game"})
 
             # ── request_state ─────────────────────────────────────────────────
@@ -276,7 +281,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str):
                     idx = game["question_index"]
                     state["question"] = {
                         "index": idx,
-                        "text": QUESTIONS[idx],
+                        "text": QUESTIONS[game["question_order"][idx]],
                         "total": len(QUESTIONS),
                         "player_count": player_count,
                     }
@@ -340,7 +345,7 @@ async def websocket_endpoint(websocket: WebSocket, code: str):
                     await broadcast(code, {
                         "type": "question",
                         "index": next_idx,
-                        "text": QUESTIONS[next_idx],
+                        "text": QUESTIONS[game["question_order"][next_idx]],
                         "total": len(QUESTIONS),
                         "player_count": len(rooms[code]["players"]),
                         "players": rooms[code]["players"],
